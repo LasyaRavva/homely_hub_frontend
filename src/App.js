@@ -31,7 +31,7 @@ import Accomodation from "./Components/Accomodation/Accomodation";
 
 
 function App() {
-  const stripePromise=loadStripe("pk_test_51OzfWnCZ8f1nCFft6jT9d3FjsgILbL38cMAMrRpgyevL7XzplRURfO6lWyu0iazhjtupq4UB5OvjNEfHzvRQCVum00kbq27Vmx")
+  const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY)
   const dispatch = useDispatch();
   const { errors } = useSelector((state) => state.user);
   useEffect(() => {
