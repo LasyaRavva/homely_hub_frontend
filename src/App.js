@@ -31,7 +31,9 @@ import Accomodation from "./Components/Accomodation/Accomodation";
 
 
 function App() {
-  const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY)
+  const stripePromise = process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY 
+    ? loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY)
+    : null
   const dispatch = useDispatch();
   const { errors } = useSelector((state) => state.user);
   useEffect(() => {
@@ -58,16 +60,17 @@ function App() {
         <Route id="updatepassword" path="user/updatepassword" element={<UpdatePassword/>}/>
         <Route id="forgotpassword" path="user/forgotpassword" element={<ForgotPassword/>}/>
         <Route id="resetpassword" path="user/resetpassword/:token" element={<ResetPassword/>}/>
-        <Route
-        id="payment"
-        path="payment/:propertyId"
-        element={
-          <Elements stripe={stripePromise}>
-            <Payment/>
-
-          </Elements>
-        }
-        />
+        {stripePromise && (
+          <Route
+            id="payment"
+            path="payment/:propertyId"
+            element={
+              <Elements stripe={stripePromise}>
+                <Payment/>
+              </Elements>
+            }
+          />
+        )}
           <Route 
               id="mybookings" 
               path="user/booking" 
